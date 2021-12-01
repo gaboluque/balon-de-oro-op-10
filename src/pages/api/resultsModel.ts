@@ -17,8 +17,8 @@ const initialResultsGG = {
 export class Votes {
   private votes: Record<string, string> = {};
 
-  private resultsGB: Record<string, number> = initialResultsGB;
-  private resultsGG: Record<string, number> = initialResultsGG;
+  private resultsGB: Record<string, number> = { ...initialResultsGB };
+  private resultsGG: Record<string, number> = { ...initialResultsGG };
 
   private static _instance: Votes;
 
@@ -50,8 +50,8 @@ export class Votes {
 
   public resetResults() {
     this.votes = {};
-    this.resultsGB = initialResultsGB;
-    this.resultsGG = initialResultsGG;
-    return true
+    this.resultsGB = { ...initialResultsGB };
+    this.resultsGG = { ...initialResultsGG };
+    return true;
   }
 }
