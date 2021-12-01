@@ -55,17 +55,21 @@ const Home: NextPage = () => {
   const [document, setDocument] = useState<string>("");
   const [alert, setAlert] = useState<{ type: string, message: string } | undefined>(undefined);
   const [nominees, setNominees] = useState<Record<string, string | undefined>>({ gb: undefined, gg: undefined });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const vote = () => {
     if (!nominees.gg || !nominees.gb) {
       setAlert({ type: "error", message: "Debes votar tanto para Balón de oro como para Guante de oro!" });
     } else {
+      setLoading(true);
       axios.post("/api/vote", { document, nominees }).then((data: AxiosResponse) => {
         if (data.status === 200) {
           setAlert({ type: "success", message: data.data.message });
         }
       }).catch((e) => {
         setAlert({ type: "error", message: e.response.data.message });
+      }).finally(() => {
+        setLoading(false);
       })
     }
   };
@@ -122,7 +126,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         )}
-        <button className={styles.primaryButton} onClick={vote}>Votar</button>
+        <button className={styles.primaryButton} onClick={vote}>{loading ? "Votando..." : "Votar"}</button>
       </main>
     </div>
   )
