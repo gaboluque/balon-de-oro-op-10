@@ -60,7 +60,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Votación para el Balón de oro OP10"/>
       </Head>
       <main className={styles.main}>
-        <h1>OP10 <span>BALLON D'OR</span> 2021</h1>
+        <h1>OP10 <span>BALLON D&apos;OR</span> 2021</h1>
         <p className={styles.instructions}>Para votar, ingresa tu documento y toca la foto del nominado</p>
         <input placeholder="No. de documento"
                id="documentNumber"
@@ -72,7 +72,7 @@ const Home: NextPage = () => {
         <div className={styles.grid}>
           {nominees.map(({name, img}) => (
             <button key={name} className={styles.nomineeCard} onClick={vote(name)}>
-              <Image className={"img"} width={250} height={300} src={img}/>
+              <Image alt={name} className={"img"} width={250} height={300} src={img}/>
               <h2>{name}</h2>
             </button>
           ))}
