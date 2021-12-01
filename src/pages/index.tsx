@@ -12,6 +12,8 @@ import juanPabloSuesca from '../resources/img/juanPabloSuesca.jpeg';
 import samuelQuijano from '../resources/img/samuelQuijano.jpeg';
 import juanPabloCastro from '../resources/img/juanPabloCastro.jpeg';
 import nathanVillegas from '../resources/img/nathanVillegas.jpeg';
+import redCard from '../resources/img/red-card.png';
+import goal from '../resources/img/goal.png';
 
 const nomineesGB = [
   {
@@ -58,7 +60,9 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const vote = () => {
-    if (!nominees.gg || !nominees.gb) {
+    if (!document) {
+      setAlert({ type: "error", message: "Debes ingresar tu documento para votar!" });
+    } else if (!nominees.gg || !nominees.gb) {
       setAlert({ type: "error", message: "Debes votar tanto para Balón de oro como para Guante de oro!" });
     } else {
       setLoading(true);
@@ -121,6 +125,7 @@ const Home: NextPage = () => {
         {alert && (
           <div className={styles.alertContainer}>
             <div className={styles.alertMessage}>
+              <Image width={100} height={100} src={alert.type === "error" ? redCard : goal} alt="alertImg" />
               <p className={styles.message}>{alert.message}</p>
               <button className={styles.closeBtn} onClick={() => setAlert(undefined)}>X</button>
             </div>
