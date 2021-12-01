@@ -44,8 +44,7 @@ const Home: NextPage = () => {
 
   const vote = (nominee: string) => () => {
     axios.post("/api/vote", {document, nominee}).then((data: AxiosResponse) => {
-      console.log(data);
-      if (data.status === 201) {
+      if (data.status === 200) {
         setAlert({type: "success", message: data.data.message});
       }
     }).catch((e) => {

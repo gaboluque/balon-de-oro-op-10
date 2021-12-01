@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {Votes} from "./resultsModel";
 
 type Data = {
-  message: string
+  message: any
 }
 
 export default function handler(
@@ -11,12 +11,10 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    if (req.method === 'POST') {
-      const { document, nominee } = req.body;
+    if (req.method === 'GET') {
+      Votes.instance.resetResults();
 
-      const {status, message} = Votes.instance.addVote(document, nominee);
-
-      res.status(status).json({ message });
+      res.status(200).json({ message: "Resultados reiniciados" });
 
     } else {
       res.status(400).end();
