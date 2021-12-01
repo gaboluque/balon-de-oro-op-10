@@ -1,17 +1,19 @@
-import type {NextPage} from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import axios, {AxiosResponse} from "axios";
-import {useState} from "react";
+import axios, { AxiosResponse } from "axios";
+import { useState } from "react";
 import joelMerino from '../resources/img/joelMerino.jpeg';
 import jacoboVelasco from '../resources/img/jacoboVelasco.jpeg';
 import pedroHuertas from '../resources/img/pedroHuertas.jpeg';
 import laurenCalvete from '../resources/img/laurenCalvete.jpeg';
 import juanPabloSuesca from '../resources/img/juanPabloSuesca.jpeg';
 import samuelQuijano from '../resources/img/samuelQuijano.jpeg';
+import juanPabloCastro from '../resources/img/juanPabloCastro.jpeg';
+import nathanVillegas from '../resources/img/nathanVillegas.jpeg';
 
-const nominees = [
+const nomineesGB = [
   {
     name: "Joel Merino (Pulguitas)",
     img: joelMerino,
@@ -38,40 +40,76 @@ const nominees = [
   }
 ]
 
+const nomineesGG = [
+  {
+    name: "Juan Pablo Castro",
+    img: juanPabloCastro,
+  },
+  {
+    name: "Nathan Villegas",
+    img: nathanVillegas,
+  }
+]
+
 const Home: NextPage = () => {
   const [document, setDocument] = useState<string>("");
   const [alert, setAlert] = useState<{ type: string, message: string } | undefined>(undefined);
+  const [nominees, setNominees] = useState<Record<string, string | undefined>>({ gb: undefined, gg: undefined });
 
-  const vote = (nominee: string) => () => {
-    axios.post("/api/vote", {document, nominee}).then((data: AxiosResponse) => {
-      if (data.status === 200) {
-        setAlert({type: "success", message: data.data.message});
-      }
-    }).catch((e) => {
-      setAlert({type: "error", message: e.response.data.message});
-    })
-  }
+  const vote = () => {
+    if (!nominees.gg || !nominees.gb) {
+      setAlert({ type: "error", message: "Debes votar tanto para Balón de oro como para Guante de oro!" });
+    } else {
+      axios.post("/api/vote", { document, nominees }).then((data: AxiosResponse) => {
+        if (data.status === 200) {
+          setAlert({ type: "success", message: data.data.message });
+        }
+      }).catch((e) => {
+        setAlert({ type: "error", message: e.response.data.message });
+      })
+    }
+  };
+
+  const setGBNominee = (nominee: string) => () => {
+    setNominees({ ...nominees, gb: nominee });
+  };
+
+  const setGGNominee = (nominee: string) => () => {
+    setNominees({ ...nominees, gg: nominee });
+  };
 
   return (
     <div className={styles.container}>
       <Head>
         <title>Balón de oro OP10</title>
-        <meta name="description" content="Votación para el Balón de oro OP10"/>
+        <meta name="description" content="Votación para el Balón de oro OP10" />
       </Head>
       <main className={styles.main}>
         <h1>OP10 <span>BALLON D&apos;OR</span> 2021</h1>
-        <p className={styles.instructions}>Para votar, ingresa tu documento y toca la foto del nominado</p>
-        <input placeholder="No. de documento"
-               id="documentNumber"
-               value={document}
-               type={"text"}
-               onChange={({target: {value}}) => setDocument(value)}
-               className={styles.input}
-        />
+        <div className={styles.inputContainer}>
+          <p className={styles.instructions}>Para votar, ingresa tu documento y toca la foto de los nominados</p>
+          <input placeholder="No. de documento"
+            id="documentNumber"
+            value={document}
+            type={"text"}
+            onChange={({ target: { value } }) => setDocument(value)}
+            className={styles.input}
+          />
+        </div>
+        <h2>Nominados al Balón de Oro</h2>
         <div className={styles.grid}>
-          {nominees.map(({name, img}) => (
-            <button key={name} className={styles.nomineeCard} onClick={vote(name)}>
-              <Image alt={name} className={"img"} width={250} height={300} src={img}/>
+          {nomineesGB.map(({ name, img }) => (
+            <button key={name} className={`${styles.nomineeCard} ${nominees.gb === name ? styles.nomineeCardActive : undefined}`} onClick={setGBNominee(name)}>
+              <Image alt={name} className={"img"} width={250} height={300} src={img} />
+              <h2>{name}</h2>
+            </button>
+          ))}
+        </div>
+        <h2>Nominados al Guante de Oro</h2>
+        <div className={styles.grid}>
+          {nomineesGG.map(({ name, img }) => (
+            <button key={name} className={`${styles.nomineeCard} ${nominees.gg === name ? styles.nomineeCardActive : undefined}`} onClick={setGGNominee(name)}>
+              <Image alt={name} className={"img"} width={250} height={300} src={img} />
               <h2>{name}</h2>
             </button>
           ))}
@@ -84,6 +122,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         )}
+        <button className={styles.primaryButton} onClick={vote}>Votar</button>
       </main>
     </div>
   )

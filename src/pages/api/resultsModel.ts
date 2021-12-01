@@ -1,6 +1,6 @@
 import {docList} from "../../resources/docList";
 
-const initialResults = {
+const initialResultsGB = {
   "Joel Merino (Pulguitas)": 0,
   "Jacobo Velasco (2014-2015)": 0,
   "Pedro Huertas (2009-2010)": 0,
@@ -9,10 +9,16 @@ const initialResults = {
   "Juan Pablo Suesca (2006-2007)": 0
 }
 
+const initialResultsGG = {
+  "Juan Pablo Castro": 0,
+  "Nathan Villegas": 0
+}
+
 export class Votes {
   private votes: Record<string, string> = {};
 
-  private results: Record<string, number> = initialResults;
+  private resultsGB: Record<string, number> = initialResultsGB;
+  private resultsGG: Record<string, number> = initialResultsGG;
 
   private static _instance: Votes;
 
@@ -22,13 +28,14 @@ export class Votes {
     return Votes._instance;
   }
 
-  public addVote(document: string, nominee: string) {
+  public addVote(document: string, nominees: {gg: string, gb: string}) {
     let status =  200;
     let message = "Gracias por votar! Disfruta el evento, ya puedes cerrar esta página";
 
     if(docList.includes(document) && !this.votes[document]) {
-      this.votes[document] = nominee;
-      this.results[nominee] += 1;
+      this.votes[document] = `${nominees.gb} + ${nominees.gg}`;
+      this.resultsGB[nominees.gb] += 1;
+      this.resultsGG[nominees.gg] += 1;
     } else {
       status = 400;
       message = "Sólo puede votar una vez cada jugador!"
@@ -38,12 +45,13 @@ export class Votes {
   }
 
   public getResults() {
-    return this.results;
+    return { gb: this.resultsGB, gg: this.resultsGG };
   }
 
   public resetResults() {
     this.votes = {};
-    this.results = initialResults;
+    this.resultsGB = initialResultsGB;
+    this.resultsGG = initialResultsGG;
     return true
   }
 }

@@ -10,8 +10,10 @@ import pedroHuertas from '../resources/img/pedroHuertas.jpeg';
 import laurenCalvete from '../resources/img/laurenCalvete.jpeg';
 import juanPabloSuesca from '../resources/img/juanPabloSuesca.jpeg';
 import samuelQuijano from '../resources/img/samuelQuijano.jpeg';
+import juanPabloCastro from '../resources/img/juanPabloCastro.jpeg';
+import nathanVillegas from '../resources/img/nathanVillegas.jpeg';
 
-const nominees = [
+const nomineesGB = [
   {
     name: "Joel Merino (Pulguitas)",
     img: joelMerino,
@@ -38,12 +40,27 @@ const nominees = [
   }
 ]
 
+const nomineesGG = [
+  {
+    name: "Juan Pablo Castro",
+    img: juanPabloCastro,
+  },
+  {
+    name: "Nathan Villegas",
+    img: nathanVillegas,
+  }
+]
+
 const Home: NextPage = () => {
-  const [results, setResults] = useState<any>(nominees.reduce((res, {name}) => ({...res, [name]: 0}), {}));
+  const [resultsGB, setResultsGB] = useState<any>(nomineesGB.reduce((res, {name}) => ({...res, [name]: 0}), {}));
+  const [resultsGG, setResultsGG] = useState<any>(nomineesGG.reduce((res, {name}) => ({...res, [name]: 0}), {}));
 
   const getResults = () => {
     axios.get(`/api/results?timestamp=${new Date().getTime()}`, {}).then((data: AxiosResponse) => {
-      if (data.status === 200) setResults(data.data.results)
+      if (data.status === 200){
+        setResultsGB(data.data.results.gb);
+        setResultsGG(data.data.results.gg);
+      }
     }).catch((e) => {
       console.log(e);
     })
@@ -62,8 +79,24 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h1>Resultados <span>BALLON D&apos;OR</span> 2021</h1>
         <div className={styles.grid}>
-          {Object.entries(results).map(([name, result]: [string, unknown]) => {
-            const nominee = nominees.find((n) => n.name === name);
+          {Object.entries(resultsGB).map(([name, result]: [string, unknown]) => {
+            const nominee = nomineesGB.find((n) => n.name === name);
+
+            if(nominee) {
+              return (
+                  <button key={name} className={styles.nomineeCard}>
+                    <Image alt={name} className={"img"} width={250} height={300} src={nominee.img}/>
+                    <h2>{name}</h2>
+                    <p>{Number(result)}</p>
+                  </button>
+              )
+            }
+          })}
+        </div>
+        <h1>Resultados <span>Guante de Oro</span> 2021</h1>
+        <div className={styles.grid}>
+          {Object.entries(resultsGG).map(([name, result]: [string, unknown]) => {
+            const nominee = nomineesGG.find((n) => n.name === name);
 
             if(nominee) {
               return (

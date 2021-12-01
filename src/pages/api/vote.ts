@@ -12,9 +12,9 @@ export default function handler(
 ) {
   try {
     if (req.method === 'POST') {
-      const { document, nominee } = req.body;
+      const { document, nominees } = req.body;
 
-      const {status, message} = Votes.instance.addVote(document, nominee);
+      const {status, message} = Votes.instance.addVote(document, nominees);
 
       res.status(status).json({ message });
 
