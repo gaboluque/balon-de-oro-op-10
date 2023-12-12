@@ -1,57 +1,60 @@
-import {docList} from "../../resources/docList";
-
-const initialResultsGB = {
-  "Joel Merino (Pulguitas)": 0,
-  "Jacobo Velasco (2014-2015)": 0,
-  "Pedro Huertas (2009-2010)": 0,
-  "Lauren Calvete (2011-2013)": 0,
-  "Samuel Quijano (2008)": 0,
-  "Juan Pablo Suesca (2006-2007)": 0
-}
-
-const initialResultsGG = {
-  "Juan Pablo Castro": 0,
-  "Nathan Villegas": 0
-}
+import { getResults, resetResults, setResults } from "../../../helpers/results-repo";
 
 export class Votes {
-  private votes: Record<string, string> = {};
-
-  private resultsGB: Record<string, number> = { ...initialResultsGB };
-  private resultsGG: Record<string, number> = { ...initialResultsGG };
+  private resultsGB: Record<string, number> = {};
+  private resultsGG: Record<string, number> = {};
 
   private static _instance: Votes;
 
   public static get instance() {
-    if(!Votes._instance) Votes._instance = new Votes();
+    if (!Votes._instance) Votes._instance = new Votes();
 
     return Votes._instance;
   }
 
-  public addVote(document: string, nominees: {gg: string, gb: string}) {
-    let status =  200;
-    let message = "Gracias por votar! Disfruta el evento, ya puedes cerrar esta página";
+  public addVote(vote: string[]) {
+    this.downloadResults();
 
-    if(docList.includes(document) && !this.votes[document]) {
-      this.votes[document] = `${nominees.gb} + ${nominees.gg}`;
-      this.resultsGB[nominees.gb] += 1;
-      this.resultsGG[nominees.gg] += 1;
-    } else {
-      status = 400;
-      message = "Sólo puede votar una vez cada jugador!"
-    }
+    const gbVote = vote[0];
+    const ggVote = vote[1];
 
-    return {status, message}
+    this.resultsGB[gbVote] = this.resultsGB[gbVote] ? this.resultsGB[gbVote] + 1 : 1;
+    this.resultsGG[ggVote] = this.resultsGG[ggVote] ? this.resultsGG[ggVote] + 1 : 1;
+
+
+    this.uploadResults();
+
+    return { status: 200, message: "Gracias por votar! Disfruta el evento" };
   }
 
   public getResults() {
-    return { gb: this.resultsGB, gg: this.resultsGG };
+    this.downloadResults();
+
+    const sortedGb = Object.entries(this.resultsGB).sort((a, b) => b[1] - a[1]);
+    const sortedGg = Object.entries(this.resultsGG).sort((a, b) => b[1] - a[1]);
+
+    return {
+      resultsGB: sortedGb,
+      resultsGG: sortedGg
+    };
   }
 
   public resetResults() {
-    this.votes = {};
-    this.resultsGB = { ...initialResultsGB };
-    this.resultsGG = { ...initialResultsGG };
-    return true;
+    resetResults();
+  }
+
+  private downloadResults() {
+    const results = getResults();
+    const { gb, gg } = results;
+
+    this.resultsGB = gb;
+    this.resultsGG = gg;
+  }
+
+  private uploadResults() {
+    setResults({
+      gb: this.resultsGB,
+      gg: this.resultsGG
+    });
   }
 }

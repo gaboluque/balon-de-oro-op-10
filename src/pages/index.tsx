@@ -4,69 +4,117 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
-import joelMerino from '../resources/img/joelMerino.jpeg';
-import jacoboVelasco from '../resources/img/jacoboVelasco.jpeg';
-import pedroHuertas from '../resources/img/pedroHuertas.jpeg';
-import laurenCalvete from '../resources/img/laurenCalvete.jpeg';
-import juanPabloSuesca from '../resources/img/juanPabloSuesca.jpeg';
-import samuelQuijano from '../resources/img/samuelQuijano.jpeg';
-import juanPabloCastro from '../resources/img/juanPabloCastro.jpeg';
-import nathanVillegas from '../resources/img/nathanVillegas.jpeg';
 import redCard from '../resources/img/red-card.png';
 import goal from '../resources/img/goal.png';
+import { CategorySection } from "../components/categories/CategorySection";
 
-const nomineesGB = [
+
+export const nomineesGB = [
   {
-    name: "Joel Merino (Pulguitas)",
-    img: joelMerino,
+    name: "Diego Fernández Curi (Pulguitas Sede Chía)",
+    img: "https://placebeard.it/g/640/480",
   },
   {
-    name: "Jacobo Velasco (2014-2015)",
-    img: jacoboVelasco,
+    name: "Mathias Alejandro Castillo Nuñez (Pulguitas Sede Bosa)",
+    img: "https://placebeard.it/g/640/480",
   },
   {
-    name: "Pedro Huertas (2009-2010)",
-    img: pedroHuertas,
+    name: "Ronaldo Alberto Saldarriaga Luna (Pelusas)",
+    img: "https://placebeard.it/g/640/480",
   },
   {
-    name: "Lauren Calvete (2011-2013)",
-    img: laurenCalvete,
+    name: "Lauren Sofia Calvete Molina (2012-2013)",
+    img: "https://placebeard.it/g/640/480",
   },
   {
-    name: "Samuel Quijano (2008)",
-    img: samuelQuijano,
+    name: "Daniel Santiago Castillo Nuñez (2011-2014 Sede Bosa)",
+    img: "https://placebeard.it/g/640/480",
   },
   {
-    name: "Juan Pablo Suesca (2006-2007)",
-    img: juanPabloSuesca,
+    name: "Anthony Hinestroza Moreno (2010-2011)",
+    img: "https://placebeard.it/g/640/480",
+  },
+  {
+    name: "Isabella Ruiz Jimenez (Femenino)",
+    img: "https://placebeard.it/g/640/480",
+  },
+  {
+    name: "Mateo Montes Chibuque (2009)",
+    img: "https://placebeard.it/g/640/480",
+  },
+  {
+    name: "Angel Samuel Martínez Zarate (2008)",
+    img: "https://placebeard.it/g/640/480",
+  },
+  {
+    name: "Joel Santiago Caamaño Castro (2006-2010 Sede Bosa)",
+    img: "https://placebeard.it/g/640/480",
+  },
+  {
+    name: "Nicolás Herrera Doblado (2004-2006 Sede Chía)",
+    img: "https://placebeard.it/g/640/480",
   }
 ]
 
-const nomineesGG = [
+export const nomineesGG = [
   {
-    name: "Juan Pablo Castro",
-    img: juanPabloCastro,
+    name: "Nicolás Escobar Tamayo",
+    img: "https://placebeard.it/g/640/480",
   },
   {
-    name: "Nathan Villegas",
-    img: nathanVillegas,
+    name: "Emmanuel Sánchez Pacanchique",
+    img: "https://placebeard.it/g/640/480",
+  },
+  {
+    name: "Luciano Castellanos Rivera",
+    img: "https://placebeard.it/g/640/480",
+  },
+  {
+    name: "Juan Andrés Tobón Pinilla",
+    img: "https://placebeard.it/g/640/480",
   }
 ]
+
+export const categories = [
+  {
+    id: 0,
+    title: "Nominados al Balón de Oro",
+    nominees: nomineesGB,
+  },
+  {
+    id: 1,
+    title: "Nominados al Guante de Oro",
+    nominees: nomineesGG,
+  }
+]
+
+const getInitialSelectedNominees = () => {
+  const initialSelectedNominees: (string | undefined)[] = [];
+  categories.forEach(({ id }) => {
+    initialSelectedNominees[id] = undefined;
+  });
+  return initialSelectedNominees;
+}
 
 const Home: NextPage = () => {
-  const [document, setDocument] = useState<string>("");
   const [alert, setAlert] = useState<{ type: string, message: string } | undefined>(undefined);
-  const [nominees, setNominees] = useState<Record<string, string | undefined>>({ gb: undefined, gg: undefined });
   const [loading, setLoading] = useState<boolean>(false);
+  const [votingStatus, setVotingStatus] = useState(getInitialSelectedNominees());
+
+  const handleVoting = (categoryId: number, name: string) => {
+    const newVotingResult = [...votingStatus];
+    newVotingResult[categoryId] = name;
+
+    setVotingStatus(newVotingResult);
+  }
+
 
   const vote = () => {
-    if (!document) {
-      setAlert({ type: "error", message: "Debes ingresar tu documento para votar!" });
-    } else if (!nominees.gg || !nominees.gb) {
-      setAlert({ type: "error", message: "Debes votar tanto para Balón de oro como para Guante de oro!" });
+    if (votingStatus.some((cat) => !cat)) {
+      setAlert({ type: "error", message: "Debes votar por todas las categoría!" });
     } else {
       setLoading(true);
-      axios.post("/api/vote", { document, nominees }).then((data: AxiosResponse) => {
+      axios.post("/api/vote", { vote: votingStatus }).then((data: AxiosResponse) => {
         if (data.status === 200) {
           setAlert({ type: "success", message: data.data.message });
         }
@@ -74,58 +122,32 @@ const Home: NextPage = () => {
         setAlert({ type: "error", message: e.response.data.message });
       }).finally(() => {
         setLoading(false);
+        setVotingStatus(getInitialSelectedNominees());
       })
     }
-  };
-
-  const setGBNominee = (nominee: string) => () => {
-    setNominees({ ...nominees, gb: nominee });
-  };
-
-  const setGGNominee = (nominee: string) => () => {
-    setNominees({ ...nominees, gg: nominee });
   };
 
   return (
     <div className={styles.container}>
       <Head>
         <title>Balón de oro OP10</title>
-        <meta name="description" content="Votación para el Balón de oro OP10" />
+        <meta name="description" content="Votación para el Balón de oro OP10"/>
       </Head>
       <main className={styles.main}>
-        <h1>OP10 <span>BALLON D&apos;OR</span> 2021</h1>
-        <div className={styles.inputContainer}>
-          <p className={styles.instructions}>Para votar, ingresa tu documento y toca la foto de los nominados</p>
-          <input placeholder="No. de documento"
-            id="documentNumber"
-            value={document}
-            type={"text"}
-            onChange={({ target: { value } }) => setDocument(value)}
-            className={styles.input}
-          />
-        </div>
-        <h2>Nominados al Balón de Oro</h2>
-        <div className={styles.grid}>
-          {nomineesGB.map(({ name, img }) => (
-            <button key={name} className={`${styles.nomineeCard} ${nominees.gb === name ? styles.nomineeCardActive : undefined}`} onClick={setGBNominee(name)}>
-              <Image alt={name} className={"img"} width={250} height={300} src={img} />
-              <h2>{name}</h2>
-            </button>
-          ))}
-        </div>
-        <h2>Nominados al Guante de Oro</h2>
-        <div className={styles.grid}>
-          {nomineesGG.map(({ name, img }) => (
-            <button key={name} className={`${styles.nomineeCard} ${nominees.gg === name ? styles.nomineeCardActive : undefined}`} onClick={setGGNominee(name)}>
-              <Image alt={name} className={"img"} width={250} height={300} src={img} />
-              <h2>{name}</h2>
-            </button>
-          ))}
-        </div>
+        <h1>OP10 <span>BALLON D&apos;OR</span> 2023</h1>
+        {
+          categories.map(({ id, title, nominees }) => (
+            <CategorySection key={id} title={title}
+                             nomenees={nominees}
+                             handleVoting={(name: string) => handleVoting(id, name)}
+                             selectedNominee={votingStatus[id]}
+            />
+          ))
+        }
         {alert && (
           <div className={styles.alertContainer}>
             <div className={styles.alertMessage}>
-              <Image width={100} height={100} src={alert.type === "error" ? redCard : goal} alt="alertImg" />
+              <Image width={100} height={100} src={alert.type === "error" ? redCard : goal} alt="alertImg"/>
               <p className={styles.message}>{alert.message}</p>
               <button className={styles.closeBtn} onClick={() => setAlert(undefined)}>X</button>
             </div>

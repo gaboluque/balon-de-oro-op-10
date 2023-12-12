@@ -1,156 +1,158 @@
 .container {
-  padding: 0 2rem;
+    padding: 0 2rem;
 }
 
 .main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #FFFFFF;
+    min-height: 100vh;
+    padding: 4rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
 }
 
 .main h1 {
-  color: #FFFFFF;
-  font-size: 46px;
+    color: #FFFFFF;
+    font-size: 46px;
 }
 
 .main h1 span {
-  color: #ebbe5f;
+    color: #ebbe5f;
 }
 
 .main p.instructions {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 .grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 1000px;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin-bottom: 20px;
 }
 
 .nomineeCard {
-  margin: 1rem;
-  padding: 1.5rem;
-  color: inherit;
-  text-decoration: none;
-  max-width: 300px;
-  position: relative;
-  background-color: transparent;
-  width: 250px;
-  text-align: center;
-  border: none;
-  transition: all .2s ease-in-out;
+    margin: 1rem;
+    padding: 1.5rem;
+    color: inherit;
+    text-decoration: none;
+    max-width: 300px;
+    position: relative;
+    background-color: transparent;
+    width: 250px;
+    text-align: center;
+    border: none;
+    transition: all .2s ease-in-out;
 }
 
 .nomineeCard:hover,
 .nomineeCard:focus,
-.nomineeCard:active, 
+.nomineeCard:active,
 .nomineeCardActive {
-  color: #ebbe5f;
-  border-color: #ebbe5f;
-  transform: scale(1.1);
-  cursor: pointer;
+    color: #ebbe5f;
+    border-color: #ebbe5f;
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 .nomineeCard h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
 }
 
 .nomineeCard img {
-  object-fit: cover;
-  border: 7px solid #ebbe5f !important;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border: 7px solid #ebbe5f !important;
 }
 
 @media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
+    .grid {
+        width: 100%;
+        flex-direction: column;
+    }
 }
 
 .inputContainer {
-  margin-bottom: 100px;
-  text-align: center;
+    margin-bottom: 100px;
+    text-align: center;
 }
 
 .inputContainer .input {
-  height: 40px;
-  width: 240px;
-  text-align: center;
-  border: none;
-  border-radius: 5px;
-  font-size: 20px;
+    height: 40px;
+    width: 240px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
 }
 
 .input:focus,
 .input:active,
 .input:focus-visible {
-  outline: none;
+    outline: none;
 }
 
 .alertContainer {
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .alertMessage {
-  position: fixed;
-  width: 300px;
-  height: 300px;
-  background-color: white;
-  color: black;
-  top: 80px;
-  padding: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    color: black;
+    top: 80px;
+    padding: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .alertMessage img {
-  width: 100px !important;
-  height: 100px !important;
-  max-width: 100px !important;
-  max-height: 100px !important;
-  object-fit: contain;
+    width: 100px !important;
+    height: 100px !important;
+    max-width: 100px !important;
+    max-height: 100px !important;
+    object-fit: contain;
 }
 
 .alertMessage .closeBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 .alertMessage .message {
-  color: black;
-  text-align: center;
-  font-size: 20px;
+    color: black;
+    text-align: center;
+    font-size: 20px;
 }
 
 .primaryButton {
-  width: 150px;
-  height: 50px;
-  font-size: 20px;
-  background-color: #ebbe5f;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #ebbe5f;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
