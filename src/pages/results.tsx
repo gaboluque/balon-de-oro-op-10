@@ -7,24 +7,16 @@ import { useEffect, useState } from "react";
 import { nomineesGB, nomineesGG } from "./index";
 
 
+const resultsGB: [string, number][] = [
+  ["Lauren Sofia Calvete Molina (2012-2013)", 15],
+]
+
+const resultsGG: [string, number][] = [
+  ["Nicolás Escobar Tamayo", 10],
+]
+
+
 const Home: NextPage = () => {
-  const [resultsGB, setResultsGB] = useState<[string, number][]>([]);
-  const [resultsGG, setResultsGG] = useState<[string, number][]>([]);
-
-  const getResults = () => {
-    axios.get(`/api/results?timestamp=${new Date().getTime()}`, {}).then((data: AxiosResponse) => {
-      if (data.status === 200) {
-        setResultsGB(data.data.results.resultsGB);
-        setResultsGG(data.data.results.resultsGG);
-      }
-    }).catch((e) => {
-      console.log(e);
-    })
-  }
-
-  useEffect(() => {
-    getResults();
-  }, []);
 
   return (
     <div className={styles.container}>

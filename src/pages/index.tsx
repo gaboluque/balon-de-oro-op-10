@@ -135,10 +135,10 @@ const Home: NextPage = () => {
       setLoading(true);
       axios.post("/api/vote", { vote: votingStatus }).then((data: AxiosResponse) => {
         if (data.status === 200) {
-          setAlert({ type: "success", message: data.data.message });
+          // setAlert({ type: "success", message: data.data.message });
         }
       }).catch((e) => {
-        setAlert({ type: "error", message: e.response.data.message });
+        // setAlert({ type: "error", message: e.response.data.message });
       }).finally(() => {
         setLoading(false);
         setVotingStatus(getInitialSelectedNominees());
