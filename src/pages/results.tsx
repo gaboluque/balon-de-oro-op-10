@@ -39,7 +39,7 @@ const Home: NextPage = () => {
             const nominee = nomineesGB.find((n) => n.name === name);
             return (
               <button key={name} className={styles.nomineeCard}>
-                <Image alt={name} className={"img"} width={250} height={300} src={nominee?.img}/>
+                <Image alt={name} className={"img"} width={250} height={300} src={nominee!.img}/>
                 <h2>{name}</h2>
                 <p>{Number(result)}</p>
               </button>
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             console.log({ nominee, nomenees: nomineesGG, name });
             return (
               <button key={name} className={styles.nomineeCard}>
-                <Image alt={name} className={"img"} width={250} height={300} src={nominee?.img}/>
+                <Image alt={name} className={"img"} width={250} height={300} src={nominee!.img}/>
                 <h2>{name}</h2>
                 <p>{Number(result)}</p>
               </button>
