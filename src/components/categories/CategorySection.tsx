@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../../styles/Home.module.css";
+import Image from "next/image";
 
 type CategorySectionProps = {
   title: string,
@@ -26,7 +27,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
           <button key={name}
                   className={`${styles.nomineeCard} ${selectedNominee === name ? styles.nomineeCardActive : undefined}`}
                   onClick={() => handleVoting(name)}>
-            <img alt={name} className={"img"} width={250} height={300} src={img}/>
+            <Image alt={name} className={"img"} width={250} height={300} src={img}/>
             <h2>{name}</h2>
           </button>
         ))}

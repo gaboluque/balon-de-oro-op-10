@@ -7,71 +7,90 @@ import { useState } from "react";
 import redCard from '../resources/img/red-card.png';
 import goal from '../resources/img/goal.png';
 import { CategorySection } from "../components/categories/CategorySection";
-
+import diego_fernandez_curri from '../resources/img/diego_fernandez_curi.jpg';
+import mathias_alejandro_castillo_nunez from '../resources/img/mathias_alejandro_castillo_nunez.png';
+import ronaldo_alberto_saldarriaga_luna from '../resources/img/ronaldo_alberto_saldarriaga_luna.jpg';
+import lauren_sofia_calvete_molina from '../resources/img/lauren_sofia_calvete_molina.jpg';
+import daniel_santiago_castillo_nunez from '../resources/img/daniel_santiago_castillo_nunez.jpg';
+import anthony_hinestroza_moreno from '../resources/img/anthony_hinestroza_moreno.jpg';
+import isabella_ruiz_jimenez from '../resources/img/isabella_ruiz_jimenez.jpg';
+import mateo_montes_chibuque from '../resources/img/mateo_montes_chibuque.jpg';
+import angel_samuel_martinez_zarate from '../resources/img/angel_samuel_martinez_zarate.jpg';
+import joel_santiago_caamano_castro from '../resources/img/joel_santiago_caamano_castro.jpg';
+import nicolas_herrera_doblado from '../resources/img/nicolas_herrera_doblado.jpg';
+import nicolas_escobar_tamayo from '../resources/img/nicolas_escobar_tamayo.jpg';
+import emmanuel_sanchez_pacanchique from '../resources/img/emmanuel_sanchez_pacanchique.jpg';
+import luciano_castellanos_rivera from '../resources/img/luciano_castellanos_rivera.jpg';
+import juan_andres_tobon_pinilla from '../resources/img/juan_andres_tobon_pinilla.jpg';
+import matias_saldarriaga_rodriguez from '../resources/img/matias_saldarriaga_rodriguez.jpg';
 
 export const nomineesGB = [
   {
     name: "Diego Fernández Curi (Pulguitas Sede Chía)",
-    img: "https://placebeard.it/g/640/480",
+    img: diego_fernandez_curri,
   },
   {
     name: "Mathias Alejandro Castillo Nuñez (Pulguitas Sede Bosa)",
-    img: "https://placebeard.it/g/640/480",
+    img: mathias_alejandro_castillo_nunez,
   },
   {
     name: "Ronaldo Alberto Saldarriaga Luna (Pelusas)",
-    img: "https://placebeard.it/g/640/480",
+    img: ronaldo_alberto_saldarriaga_luna,
   },
   {
     name: "Lauren Sofia Calvete Molina (2012-2013)",
-    img: "https://placebeard.it/g/640/480",
+    img: lauren_sofia_calvete_molina,
   },
   {
     name: "Daniel Santiago Castillo Nuñez (2011-2014 Sede Bosa)",
-    img: "https://placebeard.it/g/640/480",
+    img: daniel_santiago_castillo_nunez,
   },
   {
     name: "Anthony Hinestroza Moreno (2010-2011)",
-    img: "https://placebeard.it/g/640/480",
+    img: anthony_hinestroza_moreno,
   },
   {
     name: "Isabella Ruiz Jimenez (Femenino)",
-    img: "https://placebeard.it/g/640/480",
+    img: isabella_ruiz_jimenez,
   },
   {
     name: "Mateo Montes Chibuque (2009)",
-    img: "https://placebeard.it/g/640/480",
+    img: mateo_montes_chibuque,
   },
   {
     name: "Angel Samuel Martínez Zarate (2008)",
-    img: "https://placebeard.it/g/640/480",
+    img: angel_samuel_martinez_zarate,
   },
   {
     name: "Joel Santiago Caamaño Castro (2006-2010 Sede Bosa)",
-    img: "https://placebeard.it/g/640/480",
+    img: joel_santiago_caamano_castro,
   },
   {
     name: "Nicolás Herrera Doblado (2004-2006 Sede Chía)",
-    img: "https://placebeard.it/g/640/480",
+    img: nicolas_herrera_doblado,
   }
 ]
 
 export const nomineesGG = [
   {
     name: "Nicolás Escobar Tamayo",
-    img: "https://placebeard.it/g/640/480",
+    img: nicolas_escobar_tamayo,
   },
   {
     name: "Emmanuel Sánchez Pacanchique",
-    img: "https://placebeard.it/g/640/480",
+    img: emmanuel_sanchez_pacanchique,
   },
   {
     name: "Luciano Castellanos Rivera",
-    img: "https://placebeard.it/g/640/480",
+    img: luciano_castellanos_rivera,
   },
   {
     name: "Juan Andrés Tobón Pinilla",
-    img: "https://placebeard.it/g/640/480",
+    img: juan_andres_tobon_pinilla,
+  },
+  {
+    name: "Matías Saldarriaga Rodriguez",
+    img: matias_saldarriaga_rodriguez,
   }
 ]
 
