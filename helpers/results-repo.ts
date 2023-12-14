@@ -1,21 +1,22 @@
-import * as fs from "fs";
+import fsPromises from "fs/promises";
 import path from "path";
 
+const dataFilePath = path.join(process.cwd(), "/src/pages/api/data/results.json");
 
-export const getResults = () => {
-  const results = fs.readFileSync(path.resolve("data/results.json"), "utf-8");
+export const getResults = async () => {
+  const results = await fsPromises.readFile(dataFilePath, "utf8");
+  console.log(results);
   return JSON.parse(results);
 }
 
-export const setResults = (newResults: Record<string, Record<string, number>>) => {
+export const setResults = async (newResults: Record<string, Record<string, number>>) => {
   const results = JSON.stringify(newResults, null, 2);
-  fs.writeFileSync(path.resolve("data/results.json"), results);
+  await fsPromises.writeFile(dataFilePath, results);
 }
 
-export const resetResults = () => {
-  const results = JSON.stringify({
+export const resetResults = async () => {
+  await setResults({
     gb: {},
     gg: {}
-  }, null, 2);
-  fs.writeFileSync(path.resolve("data/results.json"), results);
+  });
 }

@@ -1,18 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {Votes} from "./resultsModel";
+import { Votes } from "./resultsModel";
 
 type Data = {
   results: any
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   try {
     if (req.method === 'GET') {
-      const results = Votes.instance.getResults();
+      const results = await Votes.instance.getResults();
 
       res.status(200).json({ results });
 

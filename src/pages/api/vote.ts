@@ -6,7 +6,7 @@ type Data = {
   message: string
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
@@ -14,7 +14,7 @@ export default function handler(
     if (req.method === 'POST') {
       const { vote } = req.body;
 
-      const { status, message } = Votes.instance.addVote(vote);
+      const { status, message } = await Votes.instance.addVote(vote);
 
       res.status(status).json({ message });
 

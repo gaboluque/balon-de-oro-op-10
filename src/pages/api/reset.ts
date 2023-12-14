@@ -6,13 +6,13 @@ type Data = {
   message: any
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   try {
     if (req.method === 'GET') {
-      Votes.instance.resetResults();
+      await Votes.instance.resetResults();
 
       res.status(200).json({ message: "Resultados reiniciados" });
 

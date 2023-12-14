@@ -12,8 +12,8 @@ export class Votes {
     return Votes._instance;
   }
 
-  public addVote(vote: string[]) {
-    this.downloadResults();
+  public async addVote(vote: string[]) {
+    await this.downloadResults();
 
     const gbVote = vote[0];
     const ggVote = vote[1];
@@ -22,13 +22,13 @@ export class Votes {
     this.resultsGG[ggVote] = this.resultsGG[ggVote] ? this.resultsGG[ggVote] + 1 : 1;
 
 
-    this.uploadResults();
+    await this.uploadResults();
 
     return { status: 200, message: "Gracias por votar! Disfruta el evento" };
   }
 
-  public getResults() {
-    this.downloadResults();
+  public async getResults() {
+    await this.downloadResults();
 
     const sortedGb = Object.entries(this.resultsGB).sort((a, b) => b[1] - a[1]);
     const sortedGg = Object.entries(this.resultsGG).sort((a, b) => b[1] - a[1]);
@@ -39,20 +39,20 @@ export class Votes {
     };
   }
 
-  public resetResults() {
-    resetResults();
+  public async resetResults() {
+    await resetResults();
   }
 
-  private downloadResults() {
-    const results = getResults();
+  private async downloadResults() {
+    const results = await getResults();
     const { gb, gg } = results;
 
     this.resultsGB = gb;
     this.resultsGG = gg;
   }
 
-  private uploadResults() {
-    setResults({
+  private async uploadResults() {
+    await setResults({
       gb: this.resultsGB,
       gg: this.resultsGG
     });
